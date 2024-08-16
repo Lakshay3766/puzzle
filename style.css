@@ -12,7 +12,7 @@ body {
 
 #puz, #puzz {
   position:absolute;
-  border-radius:var(--border-radius) 0 var(--border-radius) 0;    
+  border-radius:var(--border-radius) 0 var(--border-radius) 0;
   user-select:none;
 }
 #puz {
@@ -66,7 +66,7 @@ body {
 .fifth {
   background-position:center center !important;
 }
-.sixth {  
+.sixth {
   background-position:right center !important;
 }
 .seven {

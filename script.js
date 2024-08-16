@@ -1,4 +1,4 @@
-var images = ['./sushi.jpg']; // Replace 'yourimage.png' with the actual file name
+var images = ['./sushi.jpg']; // Replace with actual image URLs
 
 var currentIndex = 0;
 var totalClicks = 0;
@@ -33,7 +33,19 @@ function reloadPuzzle() {
   allDoneElement.classList.toggle('allDone');
 }
 
-// mobile functionality
+function displayCompletedPuzzle() {
+  document.querySelector('#puz').classList.add('allDone');
+  document.querySelector('#puz').style.border = 'none';
+  document.querySelector('#puz').style.animation = 'allDone 2s linear forwards';
+
+  // Keep the completed puzzle visible for at least 10 seconds
+  setTimeout(function () {
+    reloadPuzzle();
+    randomizeImage();
+  }, 10000);
+}
+
+// Mobile functionality
 var puzzleItemsMobile = document.querySelectorAll('#puzz i');
 puzzleItemsMobile.forEach(function (element) {
   element.addEventListener('mousedown', function () {
@@ -50,6 +62,7 @@ puzzleItemsMobile.forEach(function (element) {
   });
 });
 
+// Desktop functionality
 var puzzleItemsDesktop = document.querySelectorAll('#puz i');
 puzzleItemsDesktop.forEach(function (element) {
   element.addEventListener('click', function () {
@@ -60,22 +73,15 @@ puzzleItemsDesktop.forEach(function (element) {
         clickedElement.classList.add('done');
         clickedElement.classList.toggle('clicked');
 
-        if (document.querySelectorAll('.dropped').length == 9) {
-          document.querySelector('#puz').classList.add('allDone');
-          document.querySelector('#puz').style.border = 'none';
-          document.querySelector('#puz').style.animation = 'allDone 1s linear forwards';
-
-          setTimeout(function () {
-            reloadPuzzle();
-            randomizeImage();
-          }, 1500);
+        if (document.querySelectorAll('.dropped').length === 9) {
+          displayCompletedPuzzle();
         }
       }
     }
   });
 });
 
-// desktop drag and drop
+// Desktop drag and drop
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -88,19 +94,12 @@ function drop(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
 
-  if (ev.target.className == data) {
+  if (ev.target.className === data) {
     ev.target.classList.add('dropped');
     document.querySelector('.' + data + "[draggable='true']").classList.add('done');
 
-    if (document.querySelectorAll('.dropped').length == 9) {
-      document.querySelector('#puz').classList.add('allDone');
-      document.querySelector('#puz').style.border = 'none';
-      document.querySelector('#puz').style.animation = 'allDone 1s linear forwards';
-
-      setTimeout(function () {
-        reloadPuzzle();
-        randomizeImage();
-      }, 1500);
+    if (document.querySelectorAll('.dropped').length === 9) {
+      displayCompletedPuzzle();
     }
   }
 }
